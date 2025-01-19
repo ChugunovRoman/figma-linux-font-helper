@@ -1,0 +1,22 @@
+# "Update your font installer to start using variable fonts and enable future automatic updates"
+name: figma-fonthelper
+
+services:
+    server:
+        build: .
+        volumes:
+            - $XDG_DATA_HOME/fonts:/usr/share/fonts
+            - logs_data:/home/user/.cache/figma-fonthelper
+        ports:
+            - 44950:44950
+        restart: unless-stopped
+    logs:
+        image: busybox
+        command: tail -f /logs/font-helper.log
+        volumes:
+            - logs_data:/logs
+        depends_on:
+            - server
+        restart: unless-stopped
+volumes:
+    logs_data:
