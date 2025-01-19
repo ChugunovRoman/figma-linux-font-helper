@@ -2,8 +2,7 @@ FROM debian:12.8-slim AS source
 RUN apt-get update && apt-get install -y --no-install-recommends \
       wget \
       ca-certificates && \
-    echo "progress = bar:force:noscroll" > ~/.wgetrc && \
-    wget --show-progress -qO- "https://github.com/Figma-Linux/figma-linux-font-helper/archive/refs/tags/v0.1.8.tar.gz" \
+    wget "https://github.com/Figma-Linux/figma-linux-font-helper/archive/refs/tags/v0.1.8.tar.gz" -qO- \
         | tar xzf - --transform='s|^[^/]*/|figma-fonthelper/|'
 
 FROM rust:1.84-slim-bookworm AS binary
